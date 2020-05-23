@@ -77,7 +77,7 @@ public class GrapplingHook : MonoBehaviour
                 {
                     hitEntity = hit.collider;
                     hitRigidbody2D = hitEntity.GetComponent<Rigidbody2D>();
-                    if (hitRigidbody2D == null)
+                    if (hitRigidbody2D == null) // Fixed structure, not an entity
                     {
                         anchorPoint = new Vector2(entity.position.x + maxExtension * Mathf.Cos(rotation * deg2Rad), entity.position.y + maxExtension * Mathf.Sin(rotation * deg2Rad));
                         joint.connectedAnchor = anchorPoint;
@@ -126,7 +126,7 @@ public class GrapplingHook : MonoBehaviour
     {
         currentExtension = Clamp(0,
             maxExtension,
-            currentExtension + Time.deltaTime * (isActive ? extensionSpeed : -contractionSpeed));
+            currentExtension + Time.fixedDeltaTime * (isActive ? extensionSpeed : -contractionSpeed));
 
         transform.position = new Vector2(entity.position.x + offsetX, entity.position.y + offsetY);
         transform.localScale = new Vector2(currentExtension, transform.localScale.y);
@@ -146,7 +146,7 @@ public class GrapplingHook : MonoBehaviour
         }
         else
         {
-            rotation = Clamp(rightRotationalGoal, leftRotationalGoal, rotation + Time.deltaTime * rotationSpeed * rotationSign);
+            rotation = Clamp(rightRotationalGoal, leftRotationalGoal, rotation + Time.fixedDeltaTime * rotationSpeed * rotationSign);
         }
 
         transform.rotation = Quaternion.Euler(0, 0, rotation);
