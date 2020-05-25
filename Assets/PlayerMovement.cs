@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalRaw = Input.GetAxisRaw("Horizontal");
         horizontalMove = horizontalRaw * runSpeed;
-        Debug.Log("horizontalRaw: " + horizontalRaw);
         animator.SetFloat("Speed", Mathf.Abs(horizontalRaw) > 0.5 && !isJumping ? runAnimationThreshold : 0);
 
         if (Input.GetButtonDown("Jump"))
